@@ -22,7 +22,6 @@ router.get("/:contactId", isValidId, controllers.getContactById);
 
 router.post(
   "/",
-  isValidId,
   isEmptyBody,
   validateBody(schemaAddContact),
   controllers.addContact
