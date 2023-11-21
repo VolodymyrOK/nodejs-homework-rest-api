@@ -1,3 +1,13 @@
-const isEmptyBody = require("./isEmptyBody");
+const {
+  isEmptyBody,
+  isEmptyBodyUpdate,
+  isEmptyFavoriteUpdate,
+} = require("./isEmptyBody");
+const isValidId = require("./isValidId");
 
-module.exports = isEmptyBody;
+module.exports = {
+  isEmptyBody,
+  isEmptyBodyUpdate,
+  isEmptyFavoriteUpdate,
+  isValidId,
+};

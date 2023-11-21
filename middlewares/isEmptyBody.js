@@ -18,5 +18,23 @@ const isEmptyBody = async (req, res, next) => {
   }
   next();
 };
+const isEmptyBodyUpdate = async (req, res, next) => {
+  const keys = Object.keys(req.body);
+  if (keys.length === 0) {
+    return next(HttpError(400, "All required field names are missing"));
+  }
+  next();
+};
+const isEmptyFavoriteUpdate = async (req, res, next) => {
+  const keys = Object.keys(req.body);
+  if (keys.length === 0) {
+    return next(HttpError(400, "Missing field favorite"));
+  }
+  next();
+};
 
-module.exports = isEmptyBody;
+module.exports = {
+  isEmptyBody,
+  isEmptyBodyUpdate,
+  isEmptyFavoriteUpdate,
+};
