@@ -33,8 +33,26 @@ const isEmptyFavoriteUpdate = async (req, res, next) => {
   next();
 };
 
+const isEmptyBodyAuth = async (req, res, next) => {
+  const keys = Object.keys(req.body);
+  if (keys.length === 0) {
+    return next(HttpError(400, "No required fields"));
+  }
+  next();
+};
+
+const isEmptySubscriptionUpdate = async (req, res, next) => {
+  const keys = Object.keys(req.body);
+  if (keys.length === 0) {
+    return next(HttpError(400, "Missing field subscription"));
+  }
+  next();
+};
+
 module.exports = {
   isEmptyBody,
   isEmptyBodyUpdate,
   isEmptyFavoriteUpdate,
+  isEmptyBodyAuth,
+  isEmptySubscriptionUpdate,
 };

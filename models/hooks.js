@@ -1,5 +1,6 @@
 const handleSaveError = (error, data, next) => {
-  error.status = 400;
+  const { name, code } = error;
+  error.status = name === "MongoServerError" && code === 11000 ? 409 : 400;
   next();
 };
 
@@ -9,7 +10,10 @@ const preUpdate = function (next) {
   next();
 };
 
+const emailRegexp = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
+
 module.exports = {
   handleSaveError,
   preUpdate,
+  emailRegexp,
 };
