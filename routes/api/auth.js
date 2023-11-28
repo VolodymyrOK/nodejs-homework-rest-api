@@ -6,6 +6,7 @@ const {
   isEmptyBodyAuth,
   isEmptySubscriptionUpdate,
   isValidUserId,
+  upload,
 } = require("../../middlewares");
 const { validateBody } = require("../../decorators");
 const {
@@ -41,5 +42,12 @@ authRouter.patch(
 authRouter.get("/current", authenticate, authController.getCurrent);
 
 authRouter.post("/logout", authenticate, authController.logout);
+
+authRouter.patch(
+  "/avatars",
+  authenticate,
+  upload.single("avatar"),
+  authController.updateAvatar
+);
 
 module.exports = authRouter;
