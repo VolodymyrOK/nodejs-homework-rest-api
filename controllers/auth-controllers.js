@@ -3,12 +3,14 @@ const jwt = require("jsonwebtoken");
 const gravatar = require("gravatar");
 const path = require("path");
 const fs = require("fs/promises");
+const Jimp = require("jimp");
 
 const User = require("../models/User");
 const { HttpError } = require("../helpers");
 const { ctrlWrapper } = require("../decorators");
 const { JWT_SECRET } = process.env;
-const avatarsDir = path.join(__dirname, "../", "public", "avatars");
+
+const avatarsDir = path.resolve("public", "avatars");
 
 const register = async (req, res) => {
   const { email, password } = req.body;
@@ -70,7 +72,7 @@ const updateUser = async (req, res) => {
   const { userId } = req.params;
   const result = await User.findOneAndUpdate({ _id: userId }, req.body);
   if (!result) {
-    throw HttpError(404, `USer with id=${userId} not found`);
+    throw HttpError(404, `User with id=${userId} not found`);
   }
   res.json(result);
 };
@@ -87,6 +89,14 @@ const updateAvatar = async (req, res) => {
   const filename = `${_id}_${originalname}`;
   const resultUpload = path.join(avatarsDir, filename);
   await fs.rename(tempUpload, resultUpload);
+
+  Jimp.read(resultUpload, (err, avatarFile) => {
+    if (err) {
+      throw HttpError(404, `File ${filename} not found`);
+    }
+    avatarFile.resize(250, 250).write(resultUpload);
+  });
+
   const avatarURL = path.join("avatars", filename);
   await User.findByIdAndUpdate(_id, { avatarURL });
   res.json({
