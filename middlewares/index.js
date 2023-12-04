@@ -7,6 +7,7 @@ const {
 } = require("./isEmptyBody");
 const { isValidId, isValidUserId } = require("./isValidId");
 const authenticate = require("./authenticate");
+const upload = require("./upload");
 
 module.exports = {
   isEmptyBody,
@@ -17,4 +18,5 @@ module.exports = {
   isValidUserId,
   authenticate,
   isEmptySubscriptionUpdate,
+  upload,
 };
