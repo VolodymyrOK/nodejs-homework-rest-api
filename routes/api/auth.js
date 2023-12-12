@@ -13,6 +13,7 @@ const {
   userRegisterSchema,
   userLoginSchema,
   userSubscriptionSchema,
+  userEmailSchema,
 } = require("../../schemes/user-schemes");
 
 const authRouter = express.Router();
@@ -22,6 +23,15 @@ authRouter.post(
   isEmptyBodyAuth,
   validateBody(userRegisterSchema),
   authController.register
+);
+
+authRouter.get("/verify/:verificationToken", authController.verify);
+
+authRouter.post(
+  "/verify",
+  isEmptyBodyAuth,
+  validateBody(userEmailSchema),
+  authController.resendVerify
 );
 
 authRouter.post(

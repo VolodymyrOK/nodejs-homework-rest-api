@@ -14,8 +14,13 @@ const userSubscriptionSchema = Joi.object({
   subscription: Joi.string().required(),
 });
 
+const userEmailSchema = Joi.object({
+  email: Joi.string().required(),
+});
+
 module.exports = {
   userRegisterSchema,
   userLoginSchema,
   userSubscriptionSchema,
+  userEmailSchema,
 };
